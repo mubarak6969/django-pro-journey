@@ -76,11 +76,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+import dj_database_url
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.config(default=config('postgresql://mood_tracker_db_j0qw_user:lmbG50COnDsDE0kgwMv0SQCMF8gwII7L@dpg-d23nervdiees739qkftg-a/mood_tracker_db_j0qw'))
 }
 
 
