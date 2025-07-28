@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mood Entry</title>
+</head>
+<body>
+    <h2>How are you feeling today?</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <label>Mood:</label>
+        <select name="mood" required>
+            <option value="😄">Happy</option>
+            <option value="😐">Neutral</option>
+            <option value="😔">Sad</option>
+            <option value="😡">Angry</option>
+            <option value="😴">Tired</option>
+        </select><br><br>
+
+        <label>Note (optional):</label><br>
+        <textarea name="note" rows="4" cols="40"></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
