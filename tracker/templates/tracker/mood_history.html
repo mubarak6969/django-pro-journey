@@ -1,51 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Mood History</title>
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        table { border-collapse: collapse; width: 80%; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .nav { margin-bottom: 20px; }
-    </style>
-</head>
-<body>
-    <h2>Your Mood History</h2>
-    {% if current_filter %}
-    <p>Currently showing moods: <strong>{{ current_filter }}</strong></p>
-{% endif %}
+{% extends 'base.html' %}
+{% block title %}Mood History{% endblock %}
+{% block content %}
+<h2 class="text-xl font-semibold mb-4">Mood History</h2>
 
-
-    <div class="nav">
-    <a href="/">➕ Add Mood</a> |
-    <a href="/history/">🔄 Show All</a> |
-    <strong>Filter:</strong>
-    <a href="/history/?mood=😄">😄</a>
-    <a href="/history/?mood=😐">😐</a>
-    <a href="/history/?mood=😔">😔</a>
-    <a href="/history/?mood=😡">😡</a>
-    <a href="/history/?mood=😴">😴</a>
+<div class="space-x-2 mb-3">
+    <a href="/history/" class="px-2 py-1 bg-gray-200 rounded">All</a>
+    {% for emoji in "😄😐😔😡😴" %}
+        <a href="?mood={{ emoji }}" class="px-2 py-1 bg-blue-100 rounded">{{ emoji }}</a>
+    {% endfor %}
 </div>
 
+{% if current_filter %}
+    <p class="text-sm text-gray-600 mb-2">Filtered by mood: <strong>{{ current_filter }}</strong></p>
+{% endif %}
 
-    <table>
-        <tr>
-            <th>Date</th>
-            <th>Mood</th>
-            <th>Note</th>
+<table class="w-full border-collapse">
+    <thead>
+        <tr class="bg-blue-100">
+            <th class="border p-2">Date</th>
+            <th class="border p-2">Mood</th>
+            <th class="border p-2">Note</th>
         </tr>
+    </thead>
+    <tbody>
         {% for entry in entries %}
-        <tr>
-            <td>{{ entry.date }}</td>
-            <td>{{ entry.mood }}</td>
-            <td>{{ entry.note }}</td>
+        <tr class="hover:bg-gray-50">
+            <td class="border p-2">{{ entry.date }}</td>
+            <td class="border p-2 text-xl">{{ entry.mood }}</td>
+            <td class="border p-2">{{ entry.note|default:"-" }}</td>
         </tr>
         {% empty %}
         <tr>
-            <td colspan="3">No mood entries yet.</td>
+            <td colspan="3" class="border p-2 text-center">No entries.</td>
         </tr>
         {% endfor %}
-    </table>
-</body>
-</html>
+    </tbody>
+</table>
+{% endblock %}
