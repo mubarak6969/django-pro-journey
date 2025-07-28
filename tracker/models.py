@@ -1,17 +1,9 @@
 from django.db import models
 
 class MoodEntry(models.Model):
-    MOOD_CHOICES = [
-        ('😄', 'Happy'),
-        ('😐', 'Neutral'),
-        ('😔', 'Sad'),
-        ('😡', 'Angry'),
-        ('😴', 'Tired'),
-    ]
-    
-    mood = models.CharField(max_length=2, choices=MOOD_CHOICES)
+    mood = models.CharField(max_length=100)
     note = models.TextField(blank=True)
-    date = models.DateField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
-    def _str_(self):
-        return f"{self.mood} - {self.date}"
+    def __str__(self):
+        return f"{self.mood} at {self.timestamp.strftime('%Y-%m-%d %H:%M')}"

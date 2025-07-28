@@ -1,39 +1,21 @@
 {% extends 'base.html' %}
+
 {% block title %}Mood History{% endblock %}
+
 {% block content %}
-<h2 class="text-xl font-semibold mb-4">Mood History</h2>
-
-<div class="space-x-2 mb-3">
-    <a href="/history/" class="px-2 py-1 bg-gray-200 rounded">All</a>
-    {% for emoji in "😄😐😔😡😴" %}
-        <a href="?mood={{ emoji }}" class="px-2 py-1 bg-blue-100 rounded">{{ emoji }}</a>
-    {% endfor %}
+<div class="card shadow-sm p-4">
+    <h2 class="mb-4">Mood History</h2>
+    {% if moods %}
+        <ul class="list-group">
+            {% for mood in moods %}
+                <li class="list-group-item">
+                    <strong>{{ mood.timestamp|date:"M d, Y H:i" }}</strong>: 
+                    {{ mood.mood }} - {{ mood.note }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No moods saved yet.</p>
+    {% endif %}
 </div>
-
-{% if current_filter %}
-    <p class="text-sm text-gray-600 mb-2">Filtered by mood: <strong>{{ current_filter }}</strong></p>
-{% endif %}
-
-<table class="w-full border-collapse">
-    <thead>
-        <tr class="bg-blue-100">
-            <th class="border p-2">Date</th>
-            <th class="border p-2">Mood</th>
-            <th class="border p-2">Note</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for entry in entries %}
-        <tr class="hover:bg-gray-50">
-            <td class="border p-2">{{ entry.date }}</td>
-            <td class="border p-2 text-xl">{{ entry.mood }}</td>
-            <td class="border p-2">{{ entry.note|default:"-" }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="3" class="border p-2 text-center">No entries.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
 {% endblock %}
