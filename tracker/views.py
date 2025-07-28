@@ -13,5 +13,13 @@ def mood_entry_view(request):
 
 # 🔹 New view to list all entries
 def mood_history_view(request):
-    entries = MoodEntry.objects.order_by('-date')
-    return render(request, 'tracker/mood_history.html', {'entries': entries})
+    mood_filter = request.GET.get('mood')  # Get ?mood= from URL
+    if mood_filter:
+        entries = MoodEntry.objects.filter(mood=mood_filter).order_by('-date')
+    else:
+        entries = MoodEntry.objects.order_by('-date')
+    
+    return render(request, 'tracker/mood_history.html', {
+        'entries': entries,
+        'current_filter': mood_filter
+    })

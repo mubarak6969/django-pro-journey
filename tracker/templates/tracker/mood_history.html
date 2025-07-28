@@ -12,10 +12,22 @@
 </head>
 <body>
     <h2>Your Mood History</h2>
+    {% if current_filter %}
+    <p>Currently showing moods: <strong>{{ current_filter }}</strong></p>
+{% endif %}
+
 
     <div class="nav">
-        <a href="/">Add Mood</a>
-    </div>
+    <a href="/">➕ Add Mood</a> |
+    <a href="/history/">🔄 Show All</a> |
+    <strong>Filter:</strong>
+    <a href="/history/?mood=😄">😄</a>
+    <a href="/history/?mood=😐">😐</a>
+    <a href="/history/?mood=😔">😔</a>
+    <a href="/history/?mood=😡">😡</a>
+    <a href="/history/?mood=😴">😴</a>
+</div>
+
 
     <table>
         <tr>
