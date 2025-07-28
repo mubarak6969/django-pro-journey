@@ -77,10 +77,21 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 import dj_database_url
+from decouple import config
+import os
 
-DATABASES = {
-    'default': dj_database_url.config(default=config('postgresql://mood_tracker_db_j0qw_user:lmbG50COnDsDE0kgwMv0SQCMF8gwII7L@dpg-d23nervdiees739qkftg-a/mood_tracker_db_j0qw'))
-}
+if os.getenv("RENDER") == "TRUE":
+    DATABASES = {
+        'default': dj_database_url.config(default=config("DATABASE_URL"))
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
 
 
 # Password validation
