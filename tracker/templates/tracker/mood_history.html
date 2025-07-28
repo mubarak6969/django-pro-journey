@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mood History</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        table { border-collapse: collapse; width: 80%; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .nav { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h2>Your Mood History</h2>
+
+    <div class="nav">
+        <a href="/">Add Mood</a>
+    </div>
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Mood</th>
+            <th>Note</th>
+        </tr>
+        {% for entry in entries %}
+        <tr>
+            <td>{{ entry.date }}</td>
+            <td>{{ entry.mood }}</td>
+            <td>{{ entry.note }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No mood entries yet.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
